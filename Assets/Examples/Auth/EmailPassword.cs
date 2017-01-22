@@ -4,6 +4,7 @@ using UnityEngine;
 using Firebase.Auth;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class EmailPassword : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EmailPassword : MonoBehaviour
     private FirebaseAuth auth;
     public InputField UserNameInput, PasswordInput;
     public Button SignupButton, LoginButton;
+    public Text ErrorText;
         
     void Start()
     {
@@ -42,15 +44,28 @@ public class EmailPassword : MonoBehaviour
             if (task.IsFaulted)
             {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync error: " + task.Exception);
+                if(task.Exception.InnerExceptions.Count >0)
+                    UpdateErrorMessage(task.Exception.InnerExceptions[0].Message);
                 return;
             }
             
             FirebaseUser newUser = task.Result; // Firebase user has been created.
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
+            UpdateErrorMessage("Signup Success");
         });
     }
 
+    private void UpdateErrorMessage(string message)
+    {
+        ErrorText.text = message;
+        Invoke("ClearErrorMessage", 3);
+    }
+
+    void ClearErrorMessage()
+    {
+        ErrorText.text = "";
+    }
     public void Login(string email, string password)
     {        
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
@@ -63,8 +78,8 @@ public class EmailPassword : MonoBehaviour
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInWithEmailAndPasswordAsync error: " + task.Exception);
-                PlayerPrefs.SetInt("LoginSuccess", 0);
-                SceneManager.LoadScene("LoginResults");
+                if (task.Exception.InnerExceptions.Count > 0)
+                    UpdateErrorMessage(task.Exception.InnerExceptions[0].Message);
                 return;
             }
 
