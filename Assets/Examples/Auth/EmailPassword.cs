@@ -13,14 +13,14 @@ public class EmailPassword : MonoBehaviour
     public InputField UserNameInput, PasswordInput;
     public Button SignupButton, LoginButton;
     public Text ErrorText;
-        
+
     void Start()
     {
         auth = FirebaseAuth.DefaultInstance;
+        //Just an example to save typing in the login form
+        UserNameInput.text = "demofirebase@gmail.com";
+        PasswordInput.text = "abcdefgh";
 
-         UserNameInput.text = "demofirebase@gmail.com";
-         PasswordInput.text = "abcdefgh";
-        
         SignupButton.onClick.AddListener(() => Signup(UserNameInput.text, PasswordInput.text));
         LoginButton.onClick.AddListener(() => Login(UserNameInput.text, PasswordInput.text));
     }
@@ -44,11 +44,11 @@ public class EmailPassword : MonoBehaviour
             if (task.IsFaulted)
             {
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync error: " + task.Exception);
-                if(task.Exception.InnerExceptions.Count >0)
+                if (task.Exception.InnerExceptions.Count > 0)
                     UpdateErrorMessage(task.Exception.InnerExceptions[0].Message);
                 return;
             }
-            
+
             FirebaseUser newUser = task.Result; // Firebase user has been created.
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
@@ -67,7 +67,7 @@ public class EmailPassword : MonoBehaviour
         ErrorText.text = "";
     }
     public void Login(string email, string password)
-    {        
+    {
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
         {
             if (task.IsCanceled)
@@ -87,7 +87,7 @@ public class EmailPassword : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 user.DisplayName, user.UserId);
 
-            PlayerPrefs.SetInt("LoginSuccess", user != null ? 1 : 0);
+            PlayerPrefs.SetString("LoginUser", user != null ? user.Email : "Unknown");
             SceneManager.LoadScene("LoginResults");
         });
     }

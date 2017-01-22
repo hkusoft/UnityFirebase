@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoginResult : MonoBehaviour {
-    public Text LoginResultText;
-	// Use this for initialization
-	void Start () {
+public class LoginResult : MonoBehaviour
+{
 
-        int result = PlayerPrefs.GetInt("LoginSuccess", 0);
-        LoginResultText.text = "Login Fails";
-        if (result > 0)
-            LoginResultText.text = "Login Success";
-    }	
+    public Text LoginResultText;
+    void Start()
+    {
+        var user = PlayerPrefs.GetString("LoginUser", "Unknown");
+        LoginResultText.text = "Login Success as " + user;
+        Debug.LogFormat("Successfully signed in as {0}", user);
+    }
 }
