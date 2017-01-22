@@ -1,0 +1,6 @@
+<linker>
+<assembly fullname="Firebase.Database.Unity">
+    <namespace fullname="Firebase.Database" preserve="all"/>
+    <namespace fullname="Firebase.Database.Unity" preserve="all"/>
+</assembly>
+</linker>
