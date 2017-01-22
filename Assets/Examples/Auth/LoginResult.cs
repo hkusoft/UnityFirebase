@@ -10,7 +10,7 @@ public class LoginResult : MonoBehaviour
     void Start()
     {
         var user = PlayerPrefs.GetString("LoginUser", "Unknown");
-        LoginResultText.text = "Login Success as " + user;
+        LoginResultText.text = "Successfully signed in as " + user;
         Debug.LogFormat("Successfully signed in as {0}", user);
     }
 }
