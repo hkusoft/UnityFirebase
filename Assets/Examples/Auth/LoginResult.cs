@@ -12,13 +12,5 @@ public class LoginResult : MonoBehaviour {
         LoginResultText.text = "Login Fails";
         if (result > 0)
             LoginResultText.text = "Login Success";
-
-
-
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }	
 }

@@ -9,21 +9,18 @@ public class EmailPassword : MonoBehaviour
 {
 
     private FirebaseAuth auth;
-
     public InputField UserNameInput, PasswordInput;
     public Button SignupButton, LoginButton;
-
-
-    // Use this for initialization
+        
     void Start()
     {
         auth = FirebaseAuth.DefaultInstance;
 
-        string email = UserNameInput.text = "voicecad@foxmail.com";
-        string password = PasswordInput.text = "abcdefgh";
-
-        SignupButton.onClick.AddListener(() => Signup(email, password));
-        LoginButton.onClick.AddListener(() => Login(email, password));
+         UserNameInput.text = "demofirebase@gmail.com";
+         PasswordInput.text = "abcdefgh";
+        
+        SignupButton.onClick.AddListener(() => Signup(UserNameInput.text, PasswordInput.text));
+        LoginButton.onClick.AddListener(() => Login(UserNameInput.text, PasswordInput.text));
     }
 
 
@@ -44,16 +41,14 @@ public class EmailPassword : MonoBehaviour
             }
             if (task.IsFaulted)
             {
-                Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                Debug.LogError("CreateUserWithEmailAndPasswordAsync error: " + task.Exception);
                 return;
             }
-
-            // Firebase user has been created.
-            FirebaseUser newUser = task.Result;
+            
+            FirebaseUser newUser = task.Result; // Firebase user has been created.
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 newUser.DisplayName, newUser.UserId);
         });
-
     }
 
     public void Login(string email, string password)
@@ -62,12 +57,14 @@ public class EmailPassword : MonoBehaviour
         {
             if (task.IsCanceled)
             {
-                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
+                Debug.LogError("SignInWithEmailAndPasswordAsync canceled.");
                 return;
             }
             if (task.IsFaulted)
             {
-                Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                Debug.LogError("SignInWithEmailAndPasswordAsync error: " + task.Exception);
+                PlayerPrefs.SetInt("LoginSuccess", 0);
+                SceneManager.LoadScene("LoginResults");
                 return;
             }
 
