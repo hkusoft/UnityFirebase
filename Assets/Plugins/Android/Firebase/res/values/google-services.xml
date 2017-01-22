@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="firebase_database_url" translatable="false">https://unityfirebase-b183b.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">213612238669</string>
+  <string name="google_storage_bucket" translatable="false">unityfirebase-b183b.appspot.com</string>
+  <string name="google_api_key" translatable="false">AIzaSyBC7FTMDoHYbff4_vCBkUyjrbATa_9Ud7Q</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBC7FTMDoHYbff4_vCBkUyjrbATa_9Ud7Q</string>
+  <string name="google_app_id" translatable="false">1:213612238669:android:46124d34f5864878</string>
+  <string name="default_web_client_id" translatable="false">213612238669-kj6noo76o6gnjsq0473c1h93im3sglg5.apps.googleusercontent.com</string>
+</resources>
